@@ -42,3 +42,41 @@ C:\Users\Mikhail\Documents\Development\otus_java>java -cp ./mymodulehwone/target
 20 3 6 80
 [INFO ] 2018-07-01 00:51:26.869 [main] HalloweenSale - Maximum number of games: 6
 ```
+
+#### maven + jar-with-dependencies
+```bash
+C:\Users\Mikhail\Documents\Development\otus_java>mvn package assembly:single
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO]
+[INFO] my-app
+[INFO] my-module-hw-one
+[INFO]
+
+...
+
+[INFO] --- maven-assembly-plugin:3.1.0:single (default-cli) @ my-module-hw-one ---
+[INFO] Building jar: C:\Users\Mikhail\Documents\Development\otus_java\mymodulehwone\target\hw-one-jar-with-dependencies.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] my-app ............................................. SUCCESS [  1.241 s]
+[INFO] my-module-hw-one ................................... SUCCESS [  7.125 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 8.940 s
+[INFO] Finished at: 2018-07-01T11:32:48+01:00
+[INFO] Final Memory: 18M/64M
+[INFO] ------------------------------------------------------------------------
+```
+
+#### Launch of the jar with dependencies
+```bash
+C:\Users\Mikhail\Documents\Development\otus_java>java -jar ./mymodulehwone/target/hw-one-jar-with-dependencies.jar
+20 3 6 80
+[INFO ] 2018-07-01 12:13:23.236 [main] HalloweenSale - Maximum number of games: 6
+```
+
+#### Obfuscation

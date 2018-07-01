@@ -75,20 +75,7 @@
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>${maven.assembly.plugin.version}</version>
-          <executions>
-            <execution>
-              <id>my-app-assembly-plugin</id>
-              <phase>package</phase> <!-- bind to the packaging phase -->
-              <goals>
-                <goal>single</goal>
-              </goals>
-            </execution>
-          </executions>
           <configuration>
-            <appendAssemblyId>true</appendAssemblyId>
-            <descriptorRefs>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
             <skipAssembly>true</skipAssembly>
           </configuration>
         </plugin>

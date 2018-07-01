@@ -18,7 +18,7 @@
   <url>http://www.google.com</url>
 
   <properties>
-    <project.main.class>com.mlaptev.app.HalloweenSale</project.main.class>
+    <module.main.class>com.mlaptev.app.HalloweenSale</module.main.class>
   </properties>
 
   <build>
@@ -31,7 +31,7 @@
           <configuration>
             <archive>
               <manifest>
-                <mainClass>${project.main.class}</mainClass>
+                <mainClass>${module.main.class}</mainClass>
               </manifest>
             </archive>
           </configuration>
@@ -39,10 +39,23 @@
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>${maven.assembly.plugin.version}</version>
+          <executions>
+            <execution>
+              <id>my-module-hw-one-assembly</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
           <configuration>
+            <skipAssembly>false</skipAssembly>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
             <archive>
               <manifest>
-                <mainClass>${project.main.class}</mainClass>
+                <mainClass>${module.main.class}</mainClass>
               </manifest>
             </archive>
           </configuration>
