@@ -3,6 +3,20 @@
 #### mvn package
 
 ```bash
+C:\Users\Mikhail\Documents\Development\otus_java>mvn package
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO]
+[INFO] my-app
+[INFO] my-module-hw-one
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building my-app 1.0
+[INFO] ------------------------------------------------------------------------
+
+...
+
 [INFO] Results:
 [INFO]
 [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
