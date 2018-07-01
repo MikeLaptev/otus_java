@@ -17,18 +17,32 @@
   <name>my-module-hw-one</name>
   <url>http://www.google.com</url>
 
+  <properties>
+    <project.main.class>com.mlaptev.app.HalloweenSale</project.main.class>
+  </properties>
+
   <build>
     <finalName>hw-one</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>${maven.jar.plugin.version}</version>
           <configuration>
             <archive>
               <manifest>
-                <mainClass>com.mlaptev.app.HalloweenSale</mainClass>
+                <mainClass>${project.main.class}</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven.assembly.plugin.version}</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>${project.main.class}</mainClass>
               </manifest>
             </archive>
           </configuration>
