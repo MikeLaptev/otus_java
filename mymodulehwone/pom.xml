@@ -62,5 +62,31 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.github.wvengen</groupId>
+        <artifactId>proguard-maven-plugin</artifactId>
+        <version>${proguard.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>proguard</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <obfuscate>true</obfuscate>
+          <proguardVersion>6.0.3</proguardVersion>
+          <injar>${project.build.finalName}.jar</injar>
+          <outjar>${project.build.finalName}-small.jar</outjar>
+          <outputDirectory>${project.build.directory}</outputDirectory>
+          <libs>
+            <lib>${java.home}/jre/lib/rt.jar</lib>
+            <lib>${java.home}/jre/lib/jsse.jar</lib>
+          </libs>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
