@@ -19,6 +19,7 @@
 
   <properties>
     <module.main.class>com.mlaptev.app.HalloweenSale</module.main.class>
+    <proguard.application.version>6.0.3</proguard.application.version>
   </properties>
 
   <build>
@@ -77,15 +78,30 @@
         </executions>
         <configuration>
           <obfuscate>true</obfuscate>
-          <proguardVersion>6.0.3</proguardVersion>
-          <injar>${project.build.finalName}.jar</injar>
-          <outjar>${project.build.finalName}-small.jar</outjar>
+          <proguardVersion>${proguard.application.version}</proguardVersion>
+          <injar>${project.build.finalName}-jar-with-dependencies.jar</injar>
+          <outjar>${project.build.finalName}-jar-with-dependencies-small.jar</outjar>
           <outputDirectory>${project.build.directory}</outputDirectory>
           <libs>
-            <lib>${java.home}/jre/lib/rt.jar</lib>
-            <lib>${java.home}/jre/lib/jsse.jar</lib>
+            <lib>${java.home}/jmods/java.base.jmod</lib>
           </libs>
+          <options>
+            <option>
+              -keep public class com.mlaptev.app.HalloweenSale { public static void main(java.lang.String[]); }
+            </option>
+            <option>-dontwarn org.apache.logging.log4j.**</option>
+            <option>-keepclassmembers class * extends java.lang.Enum { *; }</option>
+            <option>-dontwarn module-info</option>
+          </options>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>net.sf.proguard</groupId>
+            <artifactId>proguard-base</artifactId>
+            <version>${proguard.application.version}</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
