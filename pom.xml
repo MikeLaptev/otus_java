@@ -39,6 +39,7 @@
 
   <modules>
     <module>mymodulehwone</module>
+    <module>mymodulehwtwo</module>
   </modules>
 
   <build>
