@@ -91,9 +91,7 @@
               <option>-keepclassmembers class * extends java.lang.Enum { *; }</option>
               <option>-keepattributes Signature</option>
               <option>-keepattributes *Annotation*</option>
-              <option>-keep class org.** { *; }</option>
-              <option>-keep class javax.** { *; }</option>
-              <option>-dontshrink</option>
+              <option>-keep class org.apache.logging.log4j.** { *; }</option>
               <option>-dontoptimize</option>
             </options>
           </configuration>

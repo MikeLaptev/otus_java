@@ -132,11 +132,15 @@ C:\Users\Mikhail\Documents\Development\otus_java>mvn package
 ##### Execution
 
 ```bash
-C:\Users\Mikhail\Documents\Development\otus_java>java -jar .\mymodulehwone\target\hw-one-jar-with-dependencies-small.jar
-ERROR StatusLogger Log4j2 could not find a logging implementation. Please add log4j-core to the classpath. Using SimpleLogger to log to the console...
-20 6 3 80
+C:\Users\Mikhail\Documents\Development\otus_java>java -jar ./mymodulehwone/target/hw-one-jar-with-dependencies-small.jar
+20 3 6 80
+[INFO ] 2018-07-08 13:14:05.562 [main] HalloweenSale - Maximum number of games: 6
+```
 
-C:\Users\Mikhail\Documents\Development\otus_java>
+##### Changes in size of final jar
+```bash
+07/08/2018  13:12         1,385,497 hw-one-jar-with-dependencies-small.jar
+07/08/2018  13:12         1,855,547 hw-one-jar-with-dependencies.jar
 ```
 
 ##### Pitfalls
@@ -169,4 +173,9 @@ ERROR StatusLogger Log4j2 could not find a logging implementation. Please add lo
 ```
 
 **Solution**
-TODO(mikhail.laptev): to identify how to use log4j properly...
+```xml
+<option>-keepattributes Signature</option>
+<option>-keepattributes *Annotation*</option>
+<option>-keep class org.apache.logging.log4j.** { *; }</option>
+<option>-dontoptimize</option>
+```
