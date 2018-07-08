@@ -85,9 +85,16 @@
               <option>
                 -keep public class com.mlaptev.app.HalloweenSale { public static void main(java.lang.String[]); }
               </option>
+              <option>-dontwarn module-info</option>
+              <!-- Adding log4j specific options -->
               <option>-dontwarn org.apache.logging.log4j.**</option>
               <option>-keepclassmembers class * extends java.lang.Enum { *; }</option>
-              <option>-dontwarn module-info</option>
+              <option>-keepattributes Signature</option>
+              <option>-keepattributes *Annotation*</option>
+              <option>-keep class org.** { *; }</option>
+              <option>-keep class javax.** { *; }</option>
+              <option>-dontshrink</option>
+              <option>-dontoptimize</option>
             </options>
           </configuration>
           <dependencies>
