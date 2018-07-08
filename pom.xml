@@ -76,9 +76,6 @@
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>${maven.assembly.plugin.version}</version>
-          <configuration>
-            <skipAssembly>true</skipAssembly>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>com.github.wvengen</groupId>
