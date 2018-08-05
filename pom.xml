@@ -40,6 +40,9 @@
   <modules>
     <module>mymodulehwone</module>
     <module>mymodulehwtwo</module>
+    <module>mymodulehwthree</module>
+    <module>mymodulehwfour</module>
+    <module>mymodulehwfive</module>
   </modules>
 
   <build>
