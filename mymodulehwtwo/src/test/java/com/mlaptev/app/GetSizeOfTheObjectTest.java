@@ -3,9 +3,11 @@ package com.mlaptev.app;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.mlaptev.app.helpers.Empty;
+import com.mlaptev.app.helpers.OneDouble;
 import com.mlaptev.app.helpers.OnePrimitiveByte;
 import com.mlaptev.app.helpers.OnePrimitiveDouble;
 import com.mlaptev.app.helpers.OnePrimitiveInteger;
+import com.mlaptev.app.helpers.ThreeDoubles;
 import com.mlaptev.app.helpers.TwoDoubles;
 import com.mlaptev.app.helpers.TwoEmptyStrings;
 import com.mlaptev.app.helpers.TwoIntegersInsideOfIntegerCashing;
@@ -83,24 +85,75 @@ class GetSizeOfTheObjectTest {
         Arguments.of(TwoIntegersOutsideOfIntegerCashing.class,
             (Supplier<TwoIntegersOutsideOfIntegerCashing>) TwoIntegersOutsideOfIntegerCashing::new,
             applyPadding(SIZE_OF_OBJECT_HEADER
-                + 2 * (SIZE_OF_OBJECT_HEADER
-                    + applyPadding(SIZE_OF_REFERENCE
-                    + Integer.BYTES)
-                )
+                + 2 * SIZE_OF_REFERENCE
+                + 2 * applyPadding(SIZE_OF_OBJECT_HEADER
+                          + Integer.BYTES)
+            )
+        ),
+        Arguments.of(OneDouble.class,
+            (Supplier<OneDouble>) OneDouble::new,
+            applyPadding(SIZE_OF_OBJECT_HEADER
+                + 1 * SIZE_OF_REFERENCE
+                + 1 * applyPadding(SIZE_OF_OBJECT_HEADER
+                          + Double.BYTES)
             )
         ),
         Arguments.of(TwoDoubles.class,
             (Supplier<TwoDoubles>) TwoDoubles::new,
             applyPadding(SIZE_OF_OBJECT_HEADER
-                + 2 * (SIZE_OF_OBJECT_HEADER
-                    + applyPadding(SIZE_OF_REFERENCE
-                    + Double.BYTES)
-                )
+                + 2 * SIZE_OF_REFERENCE
+                + 2 * applyPadding(SIZE_OF_OBJECT_HEADER
+                          + Double.BYTES)
+            )
+        ),
+        Arguments.of(ThreeDoubles.class,
+            (Supplier<ThreeDoubles>) ThreeDoubles::new,
+            applyPadding(SIZE_OF_OBJECT_HEADER
+                + 3 * SIZE_OF_REFERENCE
+                + 3 * applyPadding(SIZE_OF_OBJECT_HEADER
+                          + Double.BYTES)
             )
         ),
         Arguments.of(String.class,
             (Supplier<String>) () -> "",
             0 // Just rewriting references for cached value, no additional memory needed
+        ),
+        Arguments.of(String.class,
+            (Supplier<String>) () -> new String(""),
+            applyPadding(SIZE_OF_OBJECT_HEADER // header of String object
+                + SIZE_OF_OBJECT_HEADER // header of Array object
+            )
+        ),
+        Arguments.of(String.class,
+            (Supplier<String>) () -> new String(new byte[0]),
+            applyPadding(SIZE_OF_OBJECT_HEADER // header of String object
+                + SIZE_OF_OBJECT_HEADER // header of Array object
+                + SIZE_OF_ARRAY_REFERENCE // reference for array
+            )
+        ),
+        Arguments.of(String.class,
+            (Supplier<String>) () -> new String(new byte[10]),
+            applyPadding(SIZE_OF_OBJECT_HEADER // header of String object
+                + SIZE_OF_OBJECT_HEADER // header of Array object
+                + SIZE_OF_ARRAY_REFERENCE // reference for array
+                + 10*Byte.BYTES
+            )
+        ),
+        Arguments.of(String.class,
+            (Supplier<String>) () -> new String(new byte[16]),
+            applyPadding(SIZE_OF_OBJECT_HEADER // header of String object
+                + SIZE_OF_OBJECT_HEADER // header of Array object
+                + SIZE_OF_ARRAY_REFERENCE // reference for array
+                + 16*Byte.BYTES
+            )
+        ),
+        Arguments.of(String.class,
+            (Supplier<String>) () -> new String(new byte[17]),
+            applyPadding(SIZE_OF_OBJECT_HEADER // header of String object
+                + SIZE_OF_OBJECT_HEADER // header of Array object
+                + SIZE_OF_ARRAY_REFERENCE // reference for array
+                + 17*Byte.BYTES
+            )
         ),
         // Generating of 128 bit UUID
         Arguments.of(String.class,
