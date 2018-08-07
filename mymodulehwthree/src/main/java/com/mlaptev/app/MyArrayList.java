@@ -5,8 +5,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MyArrayList<T> implements List<T> {
+
+  private static final Logger logger = LogManager.getLogger(MyArrayList.class);
 
   private int size = 0;
   private int capacity = 0;
@@ -58,13 +62,36 @@ public class MyArrayList<T> implements List<T> {
   }
 
   @Override
-  public Iterator<T> iterator() {
-    return null;
+  public boolean add(T t) {
+    if (size + 1 > capacity && !extend()) {
+      return false;
+    }
+    elements[size] = t;
+    size++;
+    return true;
   }
 
-  @Override
-  public boolean add(T t) {
-    return false;
+  private boolean extend() {
+    // Let's check if it is possible or not to add the memory
+    if (Integer.MAX_VALUE == capacity) {
+      return false;
+    } else if (Integer.MAX_VALUE - capacity < (capacity + 1) >> 2) {
+      capacity = Integer.MAX_VALUE;
+    } else {
+      capacity++;
+      // Extending array on 25%
+      capacity += capacity >> 2;
+    }
+    logger.debug("Capacity increased to: {}", capacity);
+    // Creating new array
+    T[] newElements = (T[]) new Object[capacity];
+    // Copy all the element into a new array
+    System.arraycopy(elements, 0, newElements, 0, elements.length);
+    // old elements are ready for GC
+    elements = null;
+    // old elements are replacing with copy of new elements
+    elements = newElements;
+    return true;
   }
 
   @Override
@@ -120,6 +147,11 @@ public class MyArrayList<T> implements List<T> {
   @Override
   public int lastIndexOf(Object o) {
     return 0;
+  }
+
+  @Override
+  public Iterator<T> iterator() {
+    return null;
   }
 
   @Override
