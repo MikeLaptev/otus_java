@@ -55,10 +55,9 @@ public class MyArrayList<T> implements List<T> {
 
   @Override
   public T get(int index) {
-    if (0 <= index && index < size) {
-      return elements[index];
-    }
-    throw new IndexOutOfBoundsException("Invalid index provided.");
+    evaluateIndex(index);
+
+    return elements[index];
   }
 
   @Override
@@ -73,17 +72,35 @@ public class MyArrayList<T> implements List<T> {
 
   @Override
   public T set(int index, T element) {
-    if (0 <= index && index < size) {
-      T previous = elements[index];
-      elements[index] = element;
-      return previous;
-    }
-    throw new IndexOutOfBoundsException("Invalid index provided.");
+    evaluateIndex(index);
+
+    T previous = elements[index];
+    elements[index] = element;
+    return previous;
   }
 
   @Override
   public void add(int index, T element) {
+    evaluateIndex(index);
 
+    if (size + 1 > capacity && !extend()) {
+      throw new OutOfMemoryError("Cannot allocate enough memory for adding an element.");
+    }
+
+    // Copy tail of the array
+    for (int i = size - 1; i >= index; i--) {
+      elements[i + 1] = elements[i];
+    }
+
+    // Inserting the element
+    elements[index] = element;
+    size++;
+  }
+
+  private void evaluateIndex(int index) {
+    if (index < 0 || index >= size) {
+      throw new IndexOutOfBoundsException("Invalid index provided.");
+    }
   }
 
   @Override
