@@ -44,11 +44,11 @@ public class GetSizeOfTheObject {
 
     long memoryForReference = Math
         .round((memAfterArrayCreation - memBefore) / (1.0 * array.length));
-    logger.info("Memory for reference: {}", memoryForReference);
+    logger.debug("Memory for reference: {}", memoryForReference);
 
     long memoryForObject = Math
         .round((memAfterInitialization - memAfterArrayCreation) / (1.0 * array.length));
-    logger.info("Memory for object: {}", memoryForObject);
+    logger.debug("Memory for object: {}", memoryForObject);
 
     array = null;
     launchGc();
