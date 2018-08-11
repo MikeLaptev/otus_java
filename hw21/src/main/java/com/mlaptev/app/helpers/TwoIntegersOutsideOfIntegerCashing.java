@@ -6,6 +6,6 @@ package com.mlaptev.app.helpers;
 public class TwoIntegersOutsideOfIntegerCashing {
 
   // Non-cached integers
-  private Integer firstInteger = (int)Byte.MAX_VALUE + 1;
-  private Integer secondInteger = (int)Byte.MIN_VALUE - 1;
+  private Integer firstInteger = Integer.MAX_VALUE;
+  private Integer secondInteger = Integer.MIN_VALUE;
 }
