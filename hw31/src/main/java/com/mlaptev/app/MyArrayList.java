@@ -71,6 +71,26 @@ public class MyArrayList<T> implements List<T> {
     return true;
   }
 
+  @Override
+  public T set(int index, T element) {
+    if (0 <= index && index < size) {
+      T previous = elements[index];
+      elements[index] = element;
+      return previous;
+    }
+    throw new IndexOutOfBoundsException("Invalid index provided.");
+  }
+
+  @Override
+  public void add(int index, T element) {
+
+  }
+
+  @Override
+  public T remove(int index) {
+    return null;
+  }
+
   private boolean extend() {
     // Let's check if it is possible or not to add the memory
     if (Integer.MAX_VALUE == capacity) {
@@ -122,21 +142,6 @@ public class MyArrayList<T> implements List<T> {
   @Override
   public boolean retainAll(Collection<?> c) {
     return false;
-  }
-
-  @Override
-  public T set(int index, T element) {
-    return null;
-  }
-
-  @Override
-  public void add(int index, T element) {
-
-  }
-
-  @Override
-  public T remove(int index) {
-    return null;
   }
 
   @Override
