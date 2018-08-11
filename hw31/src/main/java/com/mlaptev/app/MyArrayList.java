@@ -87,7 +87,7 @@ public class MyArrayList<T> implements List<T> {
       throw new OutOfMemoryError("Cannot allocate enough memory for adding an element.");
     }
 
-    // Copy tail of the array
+    // Shift right tail of the array
     for (int i = size - 1; i >= index; i--) {
       elements[i + 1] = elements[i];
     }
@@ -97,15 +97,29 @@ public class MyArrayList<T> implements List<T> {
     size++;
   }
 
-  private void evaluateIndex(int index) {
-    if (index < 0 || index >= size) {
-      throw new IndexOutOfBoundsException("Invalid index provided.");
+  @Override
+  public T remove(int index) {
+    evaluateIndex(index);
+
+    T element = elements[index];
+
+    // Shift left tail of the array
+    for (int i = index; i < size; i++) {
+      elements[i] = elements[i + 1];
     }
+
+    // Cleanup
+    elements[size - 1] = null;
+
+    // Adjusting size
+    size--;
+
+    return element;
   }
 
   @Override
-  public T remove(int index) {
-    return null;
+  public boolean remove(Object o) {
+    return false;
   }
 
   private boolean extend() {
@@ -131,9 +145,10 @@ public class MyArrayList<T> implements List<T> {
     return true;
   }
 
-  @Override
-  public boolean remove(Object o) {
-    return false;
+  private void evaluateIndex(int index) {
+    if (index < 0 || index >= size) {
+      throw new IndexOutOfBoundsException("Invalid index provided.");
+    }
   }
 
   @Override
