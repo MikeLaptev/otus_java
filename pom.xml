@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.mlaptev.app</groupId>
-  <artifactId>my-app</artifactId>
+  <artifactId>otusjavase</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
 
@@ -38,11 +38,11 @@
   </properties>
 
   <modules>
-    <module>mymodulehwone</module>
-    <module>mymodulehwtwo</module>
-    <module>mymodulehwthree</module>
-    <module>mymodulehwfour</module>
-    <module>mymodulehwfive</module>
+    <module>hw11</module>
+    <module>hw21</module>
+    <module>hw31</module>
+    <module>hw41</module>
+    <module>hw51</module>
   </modules>
 
   <build>
