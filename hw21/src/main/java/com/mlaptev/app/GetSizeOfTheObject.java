@@ -182,7 +182,7 @@ public class GetSizeOfTheObject {
         ));
 
     logger.info("Size of a String initialised by an array with size of 16 and type of byte: {} (expected {})",
-        getSizeOfTheObjectUsingLoop(() -> new String(new byte[10])),
+        getSizeOfTheObjectUsingLoop(() -> new String(new byte[16])),
         applyPadding(SIZE_OF_OBJECT_HEADER // header of String object
             + SIZE_OF_OBJECT_HEADER // header of Array object
             + SIZE_OF_ARRAY_REFERENCE // reference for array
@@ -190,7 +190,7 @@ public class GetSizeOfTheObject {
         ));
 
     logger.info("Size of a String initialised by an array with size of 17 and type of byte: {} (expected {})",
-        getSizeOfTheObjectUsingLoop(() -> new String(new byte[10])),
+        getSizeOfTheObjectUsingLoop(() -> new String(new byte[17])),
         applyPadding(SIZE_OF_OBJECT_HEADER // header of String object
             + SIZE_OF_OBJECT_HEADER // header of Array object
             + SIZE_OF_ARRAY_REFERENCE // reference for array
@@ -222,7 +222,7 @@ public class GetSizeOfTheObject {
 
     logger.info("Size of a randomly generated integer: {} (expected {})",
         getSizeOfTheObjectUsingLoop(() -> new Random().nextInt()),
-        applyPadding(SIZE_OF_ARRAY_REFERENCE
+        applyPadding(SIZE_OF_OBJECT_HEADER
             + Integer.BYTES
         ));
   }
