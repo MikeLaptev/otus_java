@@ -7,14 +7,14 @@
 
   <parent>
     <groupId>com.mlaptev.app</groupId>
-    <artifactId>my-app</artifactId>
+    <artifactId>otusjavase</artifactId>
     <version>1.0</version>
   </parent>
 
-  <artifactId>my-module-hw-one</artifactId>
+  <artifactId>hw11</artifactId>
   <packaging>jar</packaging>
 
-  <name>my-module-hw-one</name>
+  <name>hw11</name>
   <url>http://www.google.com</url>
 
   <properties>
@@ -23,7 +23,7 @@
   </properties>
 
   <build>
-    <finalName>hw-one</finalName>
+    <finalName>hw11</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
