@@ -12,12 +12,13 @@ public class MyArrayList<T> implements List<T> {
 
   private static final Logger logger = LogManager.getLogger(MyArrayList.class);
 
-  private int size = 0;
+  private int size;
   private int capacity;
   private int initialCapacity;
-  private T[] elements = (T[]) new Object[]{};
+  private T[] elements;
 
   public MyArrayList(int capacity) {
+    this.size = 0;
     this.capacity = capacity;
     this.initialCapacity = capacity;
     this.elements = (T[]) new Object[capacity];
