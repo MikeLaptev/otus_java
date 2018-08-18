@@ -166,6 +166,64 @@ public class MyArrayList<T> implements List<T> {
     return -1;
   }
 
+  @Override
+  public boolean containsAll(Collection<?> collection) {
+    if (collection == null) {
+      throw new NullPointerException("Specified collection is null");
+    }
+    for (Object item : collection) {
+      if (indexOf(item) == -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @Override
+  public boolean removeAll(Collection<?> collection) {
+    if (collection == null) {
+      throw new NullPointerException("Specified collection is null");
+    }
+
+    boolean isChanged = false;
+
+    for (Object item : collection) {
+      int index = indexOf(item);
+      if (index != -1) {
+        remove(index);
+        isChanged = true;
+      }
+    }
+
+    return isChanged;
+  }
+
+  @Override
+  public boolean retainAll(Collection<?> collection) {
+    if (collection == null) {
+      throw new NullPointerException("Specified collection is null");
+    }
+
+    boolean isChanged = false;
+
+    if (!isEmpty()) {
+      if (collection.isEmpty()) {
+        clear();
+        isChanged = true;
+      }
+      else {
+        for(int i = size() - 1; i >= 0; i--) {
+          if (!collection.contains(get(i))) {
+            remove(i);
+            isChanged = true;
+          }
+        }
+      }
+    }
+
+    return isChanged;
+  }
+
   private boolean extend() {
     // Let's check if it is possible or not to add the memory
     if (Integer.MAX_VALUE == capacity) {
@@ -217,27 +275,12 @@ public class MyArrayList<T> implements List<T> {
   }
 
   @Override
-  public boolean containsAll(Collection<?> c) {
-    return false;
-  }
-
-  @Override
   public boolean addAll(Collection<? extends T> c) {
     return false;
   }
 
   @Override
   public boolean addAll(int index, Collection<? extends T> c) {
-    return false;
-  }
-
-  @Override
-  public boolean removeAll(Collection<?> c) {
-    return false;
-  }
-
-  @Override
-  public boolean retainAll(Collection<?> c) {
     return false;
   }
 
