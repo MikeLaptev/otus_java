@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -74,7 +75,7 @@ public class MyArrayList<T> implements List<T> {
 
   @Override
   public boolean add(T t) {
-    if (size + 1 > capacity && !extend()) {
+    if (capacity - size < 1 && !extend()) {
       return false;
     }
     elements[size] = t;
@@ -246,14 +247,80 @@ public class MyArrayList<T> implements List<T> {
     throw new UnsupportedOperationException("subList operation currently is not supported.");
   }
 
+  @Override
+  public boolean addAll(Collection<? extends T> collection) {
+    if (collection == null) {
+      throw new NullPointerException("Specified collection is null.");
+    }
+
+    if (capacity - size < collection.size() && !extend(size + collection.size())) {
+      return false;
+    }
+
+    for (T item : collection) {
+      elements[size] = item;
+      size++;
+    }
+    return true;
+  }
+
+  @Override
+  public boolean addAll(int index, Collection<? extends T> collection) {
+    if (collection == null) {
+      throw new NullPointerException("Specified collection is null.");
+    }
+    evaluateIndex(index);
+
+    if (capacity - size < collection.size() && !extend(size + collection.size())) {
+      return false;
+    }
+
+    // Shift elements right
+    for (int i = size() + collection.size() - 1; i > size(); i--) {
+      elements[i] = elements[i - collection.size()];
+    }
+
+    // Insert elements from collection
+    for (T item : collection) {
+      elements[index] = item;
+      index++;
+      size++;
+    }
+
+    return true;
+  }
+
   private boolean extend() {
     // Let's check if it is possible or not to add the memory
     if (Integer.MAX_VALUE == capacity) {
       return false;
-    } else if (Integer.MAX_VALUE - capacity < (capacity + 1) >> 2) {
+    } else if (Integer.MAX_VALUE - capacity < ((capacity + 1) >> 2)) {
       capacity = Integer.MAX_VALUE;
     } else {
       capacity++;
+      // Extending array on ~25%
+      capacity += capacity >> 2;
+    }
+    logger.debug("Capacity increased to: {}", capacity);
+    // Creating new array
+    T[] newElements = (T[]) new Object[capacity];
+    // Copy all the element into a new array
+    System.arraycopy(elements, 0, newElements, 0, elements.length);
+    // old elements are ready for GC
+    elements = null;
+    // old elements are replacing with copy of new elements
+    elements = newElements;
+    return true;
+  }
+
+  private boolean extend(int atLeast) {
+    // Let's check if it is possible or not to add the memory
+    if (Integer.MAX_VALUE - capacity < atLeast) {
+      return false;
+    } else if (Integer.MAX_VALUE - atLeast < (atLeast >> 2)) {
+      capacity = Integer.MAX_VALUE;
+    } else {
+      capacity = atLeast;
       // Extending array on ~25%
       capacity += capacity >> 2;
     }
@@ -291,33 +358,93 @@ public class MyArrayList<T> implements List<T> {
   }
 
   private void evaluateIndex(int index) {
-    if (index < 0 || index >= size) {
-      throw new IndexOutOfBoundsException("Invalid index provided.");
+    if (index < 0 || index >= size()) {
+      throw new IndexOutOfBoundsException(String.format("Invalid index provided - %d", index));
     }
   }
 
   @Override
-  public boolean addAll(Collection<? extends T> c) {
-    return false;
-  }
-
-  @Override
-  public boolean addAll(int index, Collection<? extends T> c) {
-    return false;
-  }
-
-  @Override
   public Iterator<T> iterator() {
-    return null;
+    return new Iterator<>() {
+      private int current = -1;
+
+      @Override
+      public boolean hasNext() {
+        return current < size() - 1;
+      }
+
+      @Override
+      public T next() {
+        if (!hasNext()) {
+          throw new NoSuchElementException("End of the collection reached.");
+        }
+        return get(++current);
+      }
+    };
   }
 
   @Override
   public ListIterator<T> listIterator() {
-    return null;
+    return listIterator(0);
   }
 
   @Override
   public ListIterator<T> listIterator(int index) {
-    return null;
+    evaluateIndex(index);
+
+    return new ListIterator<>() {
+      private int current = index - 1;
+
+      @Override
+      public boolean hasNext() {
+        return current < size() - 1;
+      }
+
+      @Override
+      public T next() {
+        if (!hasNext()) {
+          throw new NoSuchElementException("End of the collection reached.");
+        }
+        return get(++current);
+      }
+
+      @Override
+      public boolean hasPrevious() {
+        return current > 0;
+      }
+
+      @Override
+      public T previous() {
+        if (!hasPrevious()) {
+          throw new NoSuchElementException("Beginning of the collection reached.");
+        }
+        return get(--current);
+      }
+
+      @Override
+      public int nextIndex() {
+        return current + 1;
+      }
+
+      @Override
+      public int previousIndex() {
+        return current - 1;
+      }
+
+      @Override
+      public void remove() {
+        MyArrayList.this.remove(current);
+      }
+
+      @Override
+      public void set(T t) {
+        MyArrayList.this.set(current, t);
+      }
+
+      @Override
+      public void add(T t) {
+        MyArrayList.this.add(current, t);
+      }
+    };
   }
 }
