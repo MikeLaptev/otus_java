@@ -13,8 +13,19 @@ public class MyArrayList<T> implements List<T> {
   private static final Logger logger = LogManager.getLogger(MyArrayList.class);
 
   private int size = 0;
-  private int capacity = 0;
+  private int capacity;
+  private int initialCapacity;
   private T[] elements = (T[]) new Object[]{};
+
+  public MyArrayList(int capacity) {
+    this.capacity = capacity;
+    this.initialCapacity = capacity;
+    this.elements = (T[]) new Object[capacity];
+  }
+
+  public MyArrayList() {
+    this(0);
+  }
 
   @Override
   public int size() {
@@ -49,8 +60,8 @@ public class MyArrayList<T> implements List<T> {
   @Override
   public void clear() {
     size = 0;
-    capacity = 0;
-    elements = (T[]) new Object[]{};
+    capacity = initialCapacity;
+    elements = (T[]) new Object[initialCapacity];
   }
 
   @Override
@@ -210,9 +221,8 @@ public class MyArrayList<T> implements List<T> {
       if (collection.isEmpty()) {
         clear();
         isChanged = true;
-      }
-      else {
-        for(int i = size() - 1; i >= 0; i--) {
+      } else {
+        for (int i = size() - 1; i >= 0; i--) {
           if (!collection.contains(get(i))) {
             remove(i);
             isChanged = true;
@@ -222,6 +232,17 @@ public class MyArrayList<T> implements List<T> {
     }
 
     return isChanged;
+  }
+
+  @Override
+  public List<T> subList(int fromIndex, int toIndex) {
+    if (fromIndex < 0 || toIndex > size() || fromIndex > toIndex) {
+      throw new IndexOutOfBoundsException(
+          String.format("Invalid boundaries of sublist has been provided: [%d, %d]",
+              fromIndex, toIndex));
+    }
+
+    throw new UnsupportedOperationException("subList operation currently is not supported.");
   }
 
   private boolean extend() {
@@ -296,11 +317,6 @@ public class MyArrayList<T> implements List<T> {
 
   @Override
   public ListIterator<T> listIterator(int index) {
-    return null;
-  }
-
-  @Override
-  public List<T> subList(int fromIndex, int toIndex) {
     return null;
   }
 }
