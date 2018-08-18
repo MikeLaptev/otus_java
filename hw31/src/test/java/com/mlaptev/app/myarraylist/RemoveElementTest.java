@@ -148,4 +148,20 @@ public class RemoveElementTest {
         () -> assertEquals(initialSize - 1, myArrayList.size())
     );
   }
+
+  @Test
+  void itShouldBePossibleToAddAndRemoveAllTheAddedItemsFromArray() {
+    // Arrange
+    int numberOfItemsToAdd = 100;
+
+    // Act & Assert
+    for (int item = 0; item < numberOfItemsToAdd; item++) {
+      assertTrue(myArrayList.add(item));
+    }
+
+    for (int size = numberOfItemsToAdd - 1; size >= 0; size--) {
+      myArrayList.remove(0);
+      assertEquals(size, myArrayList.size());
+    }
+  }
 }

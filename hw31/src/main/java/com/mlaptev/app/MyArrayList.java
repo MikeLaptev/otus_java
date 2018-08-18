@@ -114,6 +114,9 @@ public class MyArrayList<T> implements List<T> {
     // Adjusting size
     size--;
 
+    // Try to shrink if required
+    shrink();
+
     return element;
   }
 
@@ -171,7 +174,7 @@ public class MyArrayList<T> implements List<T> {
       capacity = Integer.MAX_VALUE;
     } else {
       capacity++;
-      // Extending array on 25%
+      // Extending array on ~25%
       capacity += capacity >> 2;
     }
     logger.debug("Capacity increased to: {}", capacity);
@@ -184,6 +187,27 @@ public class MyArrayList<T> implements List<T> {
     // old elements are replacing with copy of new elements
     elements = newElements;
     return true;
+  }
+
+  private void shrink() {
+    if (size < capacity - ((capacity - 1) >> 2)) {
+      // we can reduce size of the array
+      capacity--;
+      capacity -= (capacity >> 2);
+      logger.debug("Capacity decreased to: {}", capacity);
+
+      // Creating new array
+      T[] newElements = (T[]) new Object[capacity];
+
+      // Copy all the element into a new array
+      System.arraycopy(elements, 0, newElements, 0, size);
+
+      // old elements are ready for GC
+      elements = null;
+
+      // old elements are replacing with copy of new elements
+      elements = newElements;
+    }
   }
 
   private void evaluateIndex(int index) {
