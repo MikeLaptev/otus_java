@@ -6,10 +6,13 @@ import com.mlaptev.app.framework.annotations.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** Both before and after have the same order */
+/**
+ * Both before and after have the same order
+ */
 public class TwoTestsThreeBeforeAndAfterSameOrder {
 
-  private static final Logger logger = LogManager.getLogger(TwoTestsThreeBeforeAndAfterSameOrder.class);
+  private static final Logger logger = LogManager
+      .getLogger(TwoTestsThreeBeforeAndAfterSameOrder.class);
 
   public TwoTestsThreeBeforeAndAfterSameOrder() {
     logger.info("constructor");
@@ -29,7 +32,6 @@ public class TwoTestsThreeBeforeAndAfterSameOrder {
   public void thirdSetUp() {
     logger.info("thirdSetUp");
   }
-
 
   @Test
   public void firstTest() {

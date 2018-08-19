@@ -9,8 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class App {
 
-  public static void main(String[] args)
-      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+  public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException,
+      InvocationTargetException, InstantiationException, IllegalAccessException {
     Framework.executeTest(SingleTest.class);
     Framework.executeTest(TwoTests.class);
     Framework.executeTest(TwoTestsThreeBeforeAndAfterSameOrder.class);

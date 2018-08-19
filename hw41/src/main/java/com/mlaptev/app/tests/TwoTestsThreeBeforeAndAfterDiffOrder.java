@@ -18,7 +18,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class TwoTestsThreeBeforeAndAfterDiffOrder {
 
-  private static final Logger logger = LogManager.getLogger(TwoTestsThreeBeforeAndAfterDiffOrder.class);
+  private static final Logger logger = LogManager
+      .getLogger(TwoTestsThreeBeforeAndAfterDiffOrder.class);
 
   public TwoTestsThreeBeforeAndAfterDiffOrder() {
     logger.info("constructor");

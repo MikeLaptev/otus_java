@@ -17,8 +17,8 @@ public class Framework {
 
   private static final Logger logger = LogManager.getLogger(Framework.class);
 
-  public static void executeTest(Class klass)
-      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+  public static void executeTest(Class klass) throws ClassNotFoundException, NoSuchMethodException,
+      IllegalAccessException, InvocationTargetException, InstantiationException {
     logger.info("Executing tests from class [{}]", klass.getName());
 
     // List of all the methods
