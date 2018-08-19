@@ -1,8 +1,8 @@
 package com.mlaptev.app.tests;
 
-import com.mlaptev.app.framework.After;
-import com.mlaptev.app.framework.Before;
-import com.mlaptev.app.framework.Test;
+import com.mlaptev.app.framework.annotations.After;
+import com.mlaptev.app.framework.annotations.Before;
+import com.mlaptev.app.framework.annotations.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,22 +15,22 @@ public class TwoTests {
   }
 
   @Before
-  void setUp() {
+  public void setUp() {
     logger.info("setUp");
   }
 
   @Test
-  void firstTest() {
+  public void firstTest() {
     logger.info("firstTest");
   }
 
   @Test
-  void secondTest() {
+  public void secondTest() {
     logger.info("secondTest");
   }
 
   @After
-  void cleanUp() {
+  public void cleanUp() {
     logger.info("cleanUp");
   }
 }
