@@ -43,6 +43,7 @@
     <module>hw31</module>
     <module>hw41</module>
     <module>hw51</module>
+    <module>hw61</module>
   </modules>
 
   <build>
