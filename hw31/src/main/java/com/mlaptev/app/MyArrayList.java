@@ -15,13 +15,11 @@ public class MyArrayList<T> implements List<T> {
 
   private int size;
   private int capacity;
-  private int initialCapacity;
   private T[] elements;
 
   public MyArrayList(int capacity) {
     this.size = 0;
     this.capacity = capacity;
-    this.initialCapacity = capacity;
     this.elements = (T[]) new Object[capacity];
   }
 
@@ -62,8 +60,7 @@ public class MyArrayList<T> implements List<T> {
   @Override
   public void clear() {
     size = 0;
-    capacity = initialCapacity;
-    elements = (T[]) new Object[initialCapacity];
+    elements = (T[]) new Object[capacity];
   }
 
   @Override
@@ -75,7 +72,7 @@ public class MyArrayList<T> implements List<T> {
 
   @Override
   public boolean add(T t) {
-    if (capacity - size < 1 && !extend()) {
+    if (elements.length - size < 1 && !extend()) {
       return false;
     }
     elements[size] = t;
@@ -96,7 +93,7 @@ public class MyArrayList<T> implements List<T> {
   public void add(int index, T element) {
     evaluateIndex(index);
 
-    if (size + 1 > capacity && !extend()) {
+    if (size + 1 > elements.length && !extend()) {
       throw new OutOfMemoryError("Cannot allocate enough memory for adding an element.");
     }
 
@@ -253,7 +250,7 @@ public class MyArrayList<T> implements List<T> {
       throw new NullPointerException("Specified collection is null.");
     }
 
-    if (capacity - size < collection.size() && !extend(size + collection.size())) {
+    if (elements.length - size < collection.size() && !extend(size + collection.size())) {
       return false;
     }
 
@@ -271,7 +268,7 @@ public class MyArrayList<T> implements List<T> {
     }
     evaluateIndex(index);
 
-    if (capacity - size < collection.size() && !extend(size + collection.size())) {
+    if (elements.length - size < collection.size() && !extend(size + collection.size())) {
       return false;
     }
 
@@ -292,18 +289,20 @@ public class MyArrayList<T> implements List<T> {
 
   private boolean extend() {
     // Let's check if it is possible or not to add the memory
-    if (Integer.MAX_VALUE == capacity) {
+    int currentCapacity = elements.length;
+
+    if (Integer.MAX_VALUE == currentCapacity) {
       return false;
-    } else if (Integer.MAX_VALUE - capacity < ((capacity + 1) >> 2)) {
-      capacity = Integer.MAX_VALUE;
+    } else if (Integer.MAX_VALUE - currentCapacity < ((currentCapacity + 1) >> 2)) {
+      currentCapacity = Integer.MAX_VALUE;
     } else {
-      capacity++;
+      currentCapacity++;
       // Extending array on ~25%
-      capacity += capacity >> 2;
+      currentCapacity += currentCapacity >> 2;
     }
-    logger.debug("Capacity increased to: {}", capacity);
+    logger.debug("Capacity increased to: {}", currentCapacity);
     // Creating new array
-    T[] newElements = (T[]) new Object[capacity];
+    T[] newElements = (T[]) new Object[currentCapacity];
     // Copy all the element into a new array
     System.arraycopy(elements, 0, newElements, 0, elements.length);
     // old elements are ready for GC
@@ -315,18 +314,20 @@ public class MyArrayList<T> implements List<T> {
 
   private boolean extend(int atLeast) {
     // Let's check if it is possible or not to add the memory
-    if (Integer.MAX_VALUE - capacity < atLeast) {
+    int currentCapacity = elements.length;
+
+    if (Integer.MAX_VALUE - currentCapacity < atLeast) {
       return false;
     } else if (Integer.MAX_VALUE - atLeast < (atLeast >> 2)) {
-      capacity = Integer.MAX_VALUE;
+      currentCapacity = Integer.MAX_VALUE;
     } else {
-      capacity = atLeast;
+      currentCapacity = atLeast;
       // Extending array on ~25%
-      capacity += capacity >> 2;
+      currentCapacity += currentCapacity >> 2;
     }
-    logger.debug("Capacity increased to: {}", capacity);
+    logger.debug("Capacity increased to: {}", currentCapacity);
     // Creating new array
-    T[] newElements = (T[]) new Object[capacity];
+    T[] newElements = (T[]) new Object[currentCapacity];
     // Copy all the element into a new array
     System.arraycopy(elements, 0, newElements, 0, elements.length);
     // old elements are ready for GC
@@ -337,14 +338,16 @@ public class MyArrayList<T> implements List<T> {
   }
 
   private void shrink() {
-    if (size < capacity - ((capacity - 1) >> 2)) {
+    int currentCapacity = elements.length;
+
+    if (size < currentCapacity - ((currentCapacity - 1) >> 2)) {
       // we can reduce size of the array
-      capacity--;
-      capacity -= (capacity >> 2);
-      logger.debug("Capacity decreased to: {}", capacity);
+      currentCapacity--;
+      currentCapacity -= (currentCapacity >> 2);
+      logger.debug("Capacity decreased to: {}", currentCapacity);
 
       // Creating new array
-      T[] newElements = (T[]) new Object[capacity];
+      T[] newElements = (T[]) new Object[currentCapacity];
 
       // Copy all the element into a new array
       System.arraycopy(elements, 0, newElements, 0, size);

@@ -57,7 +57,7 @@ public class Framework {
         test.invoke(instance);
       }
       catch (Exception e) {
-        logger.error("Exception occurs: {}", e);
+        logger.error("Exception occurs during test execution.", e);
       }
 
       // Calling the after method(s)
