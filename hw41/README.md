@@ -112,3 +112,23 @@ Process finished with exit code 0
 Process finished with exit code 0
 
 ```
+
+#### Covering exception in functions annotated by `@test` annotation
+
+```bash
+[INFO ] 2018-08-20 22:35:32.509 [main] Framework - Executing tests from class [com.mlaptev.app.tests.SingleTestWithException]
+[INFO ] 2018-08-20 22:35:32.510 [main] SingleTestWithException - constructor
+[INFO ] 2018-08-20 22:35:32.510 [main] SingleTestWithException - setUp
+[ERROR] 2018-08-20 22:35:32.511 [main] Framework - Exception occurs during test execution.
+java.lang.reflect.InvocationTargetException: null
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:564) ~[?:?]
+	at com.mlaptev.app.framework.Framework.executeTest(Framework.java:57) [classes/:?]
+	at com.mlaptev.app.App.main(App.java:19) [classes/:?]
+Caused by: java.lang.NullPointerException: Example of exception.
+	at com.mlaptev.app.tests.SingleTestWithException.firstTest(SingleTestWithException.java:24) ~[classes/:?]
+	... 6 more
+[INFO ] 2018-08-20 22:35:32.739 [main] SingleTestWithException - cleanUp
+``` 
