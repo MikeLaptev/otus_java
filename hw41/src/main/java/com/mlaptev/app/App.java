@@ -2,6 +2,7 @@ package com.mlaptev.app;
 
 import com.mlaptev.app.framework.Framework;
 import com.mlaptev.app.tests.SingleTest;
+import com.mlaptev.app.tests.SingleTestWithException;
 import com.mlaptev.app.tests.TwoTests;
 import com.mlaptev.app.tests.TwoTestsThreeBeforeAndAfterDiffOrder;
 import com.mlaptev.app.tests.TwoTestsThreeBeforeAndAfterSameOrder;
@@ -15,5 +16,6 @@ public class App {
     Framework.executeTest(TwoTests.class);
     Framework.executeTest(TwoTestsThreeBeforeAndAfterSameOrder.class);
     Framework.executeTest(TwoTestsThreeBeforeAndAfterDiffOrder.class);
+    Framework.executeTest(SingleTestWithException.class);
   }
 }

@@ -53,7 +53,12 @@ public class Framework {
       }
 
       // Calling the test
-      test.invoke(instance);
+      try {
+        test.invoke(instance);
+      }
+      catch (Exception e) {
+        logger.error("Exception occurs: {}", e);
+      }
 
       // Calling the after method(s)
       for (Method afterStep : afterSteps) {
