@@ -44,6 +44,9 @@
     <module>hw41</module>
     <module>hw51</module>
     <module>hw61</module>
+    <module>hw71</module>
+    <module>hw81</module>
+    <module>hw91</module>
   </modules>
 
   <build>
