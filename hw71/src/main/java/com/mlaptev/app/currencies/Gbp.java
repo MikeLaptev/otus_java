@@ -1,57 +1,67 @@
 package com.mlaptev.app.currencies;
 
+import com.mlaptev.app.exceptions.CannotWithdrawException;
+import com.mlaptev.app.exceptions.InvalidBanknoteNominationException;
+import com.mlaptev.app.exceptions.InvalidCassetteStateException;
+import java.util.Map;
+
 public class Gbp implements BaseCurrency {
 
-  private Gbp100WithdrawChain gbp100 = new Gbp100WithdrawChain();
-  private Gbp50WithdrawChain gbp50 = new Gbp50WithdrawChain();
-  private Gbp20WithdrawChain gbp20 = new Gbp20WithdrawChain();
-  private Gbp10WithdrawChain gbp10 = new Gbp10WithdrawChain();
-  private Gbp5WithdrawChain gbp5 = new Gbp5WithdrawChain();
+  private Gbp100Banknote gbp100 = new Gbp100Banknote();
+  private Gbp50Banknote gbp50 = new Gbp50Banknote();
+  private Gbp20Banknote gbp20 = new Gbp20Banknote();
+  private Gbp10Banknote gbp10 = new Gbp10Banknote();
+  private Gbp5Banknote gbp5 = new Gbp5Banknote();
 
   public Gbp() {
     // Build chain
-    gbp100.setNextChain(gbp50);
-    gbp50.setNextChain(gbp20);
-    gbp20.setNextChain(gbp10);
-    gbp10.setNextChain(gbp5);
+    gbp100.setLowerNominationBanknote(gbp50);
+    gbp50.setLowerNominationBanknote(gbp20);
+    gbp20.setLowerNominationBanknote(gbp10);
+    gbp10.setLowerNominationBanknote(gbp5);
   }
 
   @Override
-  public boolean withdraw(Amount amount) {
+  public Map<Integer, Integer> withdraw(int amount) throws CannotWithdrawException {
     return gbp100.withdraw(amount);
   }
 
-  private class Gbp100WithdrawChain extends WithdrawChain {
+  @Override
+  public void uploadBanknotes(Map<Integer, Integer> cassette)
+      throws InvalidBanknoteNominationException, InvalidCassetteStateException {
+    gbp100.refillBanknoteFromCassette(cassette);
+  }
 
-    Gbp100WithdrawChain() {
+  private class Gbp100Banknote extends Banknote {
+
+    Gbp100Banknote() {
       nomination = 100;
     }
   }
 
-  private class Gbp50WithdrawChain extends WithdrawChain {
+  private class Gbp50Banknote extends Banknote {
 
-    Gbp50WithdrawChain() {
+    Gbp50Banknote() {
       nomination = 50;
     }
   }
 
-  private class Gbp20WithdrawChain extends WithdrawChain {
+  private class Gbp20Banknote extends Banknote {
 
-    Gbp20WithdrawChain() {
+    Gbp20Banknote() {
       nomination = 20;
     }
   }
 
-  private class Gbp10WithdrawChain extends WithdrawChain {
+  private class Gbp10Banknote extends Banknote {
 
-    Gbp10WithdrawChain() {
+    Gbp10Banknote() {
       nomination = 10;
     }
   }
 
-  private class Gbp5WithdrawChain extends WithdrawChain {
-
-    Gbp5WithdrawChain() {
+  private class Gbp5Banknote extends Banknote {
+    Gbp5Banknote() {
       nomination = 5;
     }
   }

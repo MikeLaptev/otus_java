@@ -1,66 +1,77 @@
 package com.mlaptev.app.currencies;
 
+import com.mlaptev.app.exceptions.CannotWithdrawException;
+import com.mlaptev.app.exceptions.InvalidBanknoteNominationException;
+import com.mlaptev.app.exceptions.InvalidCassetteStateException;
+import java.util.Map;
+
 public class Rub implements BaseCurrency {
 
-  private Rub5000WithdrawChain rub5000 = new Rub5000WithdrawChain();
-  private Rub1000WithdrawChain rub1000 = new Rub1000WithdrawChain();
-  private Rub500WithdrawChain rub500 = new Rub500WithdrawChain();
-  private Rub100WithdrawChain rub100 = new Rub100WithdrawChain();
-  private Rub50WithdrawChain rub50 = new Rub50WithdrawChain();
-  private Rub10WithdrawChain rub10 = new Rub10WithdrawChain();
+  private Rub5000Banknote rub5000 = new Rub5000Banknote();
+  private Rub1000Banknote rub1000 = new Rub1000Banknote();
+  private Rub500Banknote rub500 = new Rub500Banknote();
+  private Rub100Banknote rub100 = new Rub100Banknote();
+  private Rub50Banknote rub50 = new Rub50Banknote();
+  private Rub10Banknote rub10 = new Rub10Banknote();
 
   public Rub() {
     // Build chain
-    rub5000.setNextChain(rub1000);
-    rub1000.setNextChain(rub500);
-    rub500.setNextChain(rub100);
-    rub100.setNextChain(rub50);
-    rub50.setNextChain(rub10);
+    rub5000.setLowerNominationBanknote(rub1000);
+    rub1000.setLowerNominationBanknote(rub500);
+    rub500.setLowerNominationBanknote(rub100);
+    rub100.setLowerNominationBanknote(rub50);
+    rub50.setLowerNominationBanknote(rub10);
   }
 
   @Override
-  public boolean withdraw(Amount amount) {
+  public Map<Integer, Integer> withdraw(int amount) throws CannotWithdrawException {
     return rub5000.withdraw(amount);
   }
 
-  private class Rub5000WithdrawChain extends WithdrawChain {
+  @Override
+  public void uploadBanknotes(Map<Integer, Integer> cassette)
+      throws InvalidBanknoteNominationException, InvalidCassetteStateException {
+    rub5000.refillBanknoteFromCassette(cassette);
+  }
 
-    Rub5000WithdrawChain() {
+  private class Rub5000Banknote extends Banknote {
+
+    Rub5000Banknote() {
       nomination = 5000;
     }
   }
 
-  private class Rub1000WithdrawChain extends WithdrawChain {
+  private class Rub1000Banknote extends Banknote {
 
-    Rub1000WithdrawChain() {
+    Rub1000Banknote() {
       nomination = 1000;
     }
   }
 
-  private class Rub500WithdrawChain extends WithdrawChain {
+  private class Rub500Banknote extends Banknote {
 
-    Rub500WithdrawChain() {
+    Rub500Banknote() {
       nomination = 500;
     }
   }
 
-  private class Rub100WithdrawChain extends WithdrawChain {
+  private class Rub100Banknote extends Banknote {
 
-    Rub100WithdrawChain() {
+    Rub100Banknote() {
       nomination = 100;
     }
   }
 
-  private class Rub50WithdrawChain extends WithdrawChain {
+  private class Rub50Banknote extends Banknote {
 
-    Rub50WithdrawChain() {
+    Rub50Banknote() {
       nomination = 50;
     }
   }
 
-  private class Rub10WithdrawChain extends WithdrawChain {
+  private class Rub10Banknote extends Banknote {
 
-    Rub10WithdrawChain() {
+    Rub10Banknote() {
       nomination = 10;
     }
   }

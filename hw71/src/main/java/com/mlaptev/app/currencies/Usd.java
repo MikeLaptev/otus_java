@@ -1,75 +1,86 @@
 package com.mlaptev.app.currencies;
 
+import com.mlaptev.app.exceptions.CannotWithdrawException;
+import com.mlaptev.app.exceptions.InvalidBanknoteNominationException;
+import com.mlaptev.app.exceptions.InvalidCassetteStateException;
+import java.util.Map;
+
 public class Usd implements BaseCurrency {
 
-  private Usd100WithdrawChain usd100 = new Usd100WithdrawChain();
-  private Usd50WithdrawChain usd50 = new Usd50WithdrawChain();
-  private Usd20WithdrawChain usd20 = new Usd20WithdrawChain();
-  private Usd10WithdrawChain usd10 = new Usd10WithdrawChain();
-  private Usd5WithdrawChain usd5 = new Usd5WithdrawChain();
-  private Usd2WithdrawChain usd2 = new Usd2WithdrawChain();
-  private Usd1WithdrawChain usd1 = new Usd1WithdrawChain();
+  private Usd100Banknote usd100 = new Usd100Banknote();
+  private Usd50Banknote usd50 = new Usd50Banknote();
+  private Usd20Banknote usd20 = new Usd20Banknote();
+  private Usd10Banknote usd10 = new Usd10Banknote();
+  private Usd5Banknote usd5 = new Usd5Banknote();
+  private Usd2Banknote usd2 = new Usd2Banknote();
+  private Usd1Banknote usd1 = new Usd1Banknote();
 
   public Usd() {
     // Building chain
-    usd100.setNextChain(usd50);
-    usd50.setNextChain(usd20);
-    usd20.setNextChain(usd10);
-    usd10.setNextChain(usd5);
-    usd5.setNextChain(usd2);
-    usd2.setNextChain(usd1);
+    usd100.setLowerNominationBanknote(usd50);
+    usd50.setLowerNominationBanknote(usd20);
+    usd20.setLowerNominationBanknote(usd10);
+    usd10.setLowerNominationBanknote(usd5);
+    usd5.setLowerNominationBanknote(usd2);
+    usd2.setLowerNominationBanknote(usd1);
   }
 
   @Override
-  public boolean withdraw(Amount amount) {
+  public Map<Integer, Integer> withdraw(int amount) throws CannotWithdrawException {
     return usd100.withdraw(amount);
   }
 
-  private class Usd100WithdrawChain extends WithdrawChain {
+  @Override
+  public void uploadBanknotes(Map<Integer, Integer> cassette)
+      throws InvalidBanknoteNominationException, InvalidCassetteStateException {
+    usd100.refillBanknoteFromCassette(cassette);
+  }
 
-    Usd100WithdrawChain() {
+  private class Usd100Banknote extends Banknote {
+
+    Usd100Banknote() {
       nomination = 100;
     }
   }
 
-  private class Usd50WithdrawChain extends WithdrawChain {
+  private class Usd50Banknote extends Banknote {
 
-    Usd50WithdrawChain() {
+    Usd50Banknote() {
       nomination = 50;
     }
   }
 
-  private class Usd20WithdrawChain extends WithdrawChain {
+  private class Usd20Banknote extends Banknote {
 
-    Usd20WithdrawChain() {
+    Usd20Banknote() {
       nomination = 20;
     }
   }
 
-  private class Usd10WithdrawChain extends WithdrawChain {
+  private class Usd10Banknote extends Banknote {
 
-    Usd10WithdrawChain() {
+    Usd10Banknote() {
       nomination = 10;
     }
   }
 
-  private class Usd5WithdrawChain extends WithdrawChain {
+  private class Usd5Banknote extends Banknote {
 
-    Usd5WithdrawChain() {
+    Usd5Banknote() {
       nomination = 5;
     }
   }
 
-  private class Usd2WithdrawChain extends WithdrawChain {
+  private class Usd2Banknote extends Banknote {
 
-    Usd2WithdrawChain() {
+    Usd2Banknote() {
       nomination = 2;
     }
   }
 
-  private class Usd1WithdrawChain extends WithdrawChain {
+  private class Usd1Banknote extends Banknote {
 
-    Usd1WithdrawChain() {
+    Usd1Banknote() {
       nomination = 1;
     }
   }

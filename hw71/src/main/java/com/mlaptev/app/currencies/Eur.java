@@ -1,75 +1,86 @@
 package com.mlaptev.app.currencies;
 
+import com.mlaptev.app.exceptions.CannotWithdrawException;
+import com.mlaptev.app.exceptions.InvalidBanknoteNominationException;
+import com.mlaptev.app.exceptions.InvalidCassetteStateException;
+import java.util.Map;
+
 public class Eur implements BaseCurrency {
 
-  private Eur500WithdrawChain eur500 = new Eur500WithdrawChain();
-  private Eur200WithdrawChain eur200 = new Eur200WithdrawChain();
-  private Eur100WithdrawChain eur100 = new Eur100WithdrawChain();
-  private Eur50WithdrawChain eur50 = new Eur50WithdrawChain();
-  private Eur20WithdrawChain eur20 = new Eur20WithdrawChain();
-  private Eur10WithdrawChain eur10 = new Eur10WithdrawChain();
-  private Eur5WithdrawChain eur5 = new Eur5WithdrawChain();
+  private Eur500Banknote eur500 = new Eur500Banknote();
+  private Eur200Banknote eur200 = new Eur200Banknote();
+  private Eur100Banknote eur100 = new Eur100Banknote();
+  private Eur50Banknote eur50 = new Eur50Banknote();
+  private Eur20Banknote eur20 = new Eur20Banknote();
+  private Eur10Banknote eur10 = new Eur10Banknote();
+  private Eur5Banknote eur5 = new Eur5Banknote();
 
   public Eur() {
     // Build chain
-    eur500.setNextChain(eur200);
-    eur200.setNextChain(eur100);
-    eur100.setNextChain(eur50);
-    eur50.setNextChain(eur20);
-    eur20.setNextChain(eur10);
-    eur10.setNextChain(eur5);
+    eur500.setLowerNominationBanknote(eur200);
+    eur200.setLowerNominationBanknote(eur100);
+    eur100.setLowerNominationBanknote(eur50);
+    eur50.setLowerNominationBanknote(eur20);
+    eur20.setLowerNominationBanknote(eur10);
+    eur10.setLowerNominationBanknote(eur5);
   }
 
   @Override
-  public boolean withdraw(Amount amount) {
+  public Map<Integer, Integer> withdraw(int amount) throws CannotWithdrawException {
     return eur500.withdraw(amount);
   }
 
-  private class Eur500WithdrawChain extends WithdrawChain {
+  @Override
+  public void uploadBanknotes(Map<Integer, Integer> cassette)
+      throws InvalidBanknoteNominationException, InvalidCassetteStateException {
+    eur500.refillBanknoteFromCassette(cassette);
+  }
 
-    Eur500WithdrawChain() {
+  private class Eur500Banknote extends Banknote {
+
+    Eur500Banknote() {
       nomination = 500;
     }
   }
 
-  private class Eur200WithdrawChain extends WithdrawChain {
+  private class Eur200Banknote extends Banknote {
 
-    Eur200WithdrawChain() {
+    Eur200Banknote() {
       nomination = 200;
     }
   }
 
-  private class Eur100WithdrawChain extends WithdrawChain {
+  private class Eur100Banknote extends Banknote {
 
-    Eur100WithdrawChain() {
+    Eur100Banknote() {
       nomination = 100;
     }
   }
 
-  private class Eur50WithdrawChain extends WithdrawChain {
+  private class Eur50Banknote extends Banknote {
 
-    Eur50WithdrawChain() {
+    Eur50Banknote() {
       nomination = 50;
     }
   }
 
-  private class Eur20WithdrawChain extends WithdrawChain {
+  private class Eur20Banknote extends Banknote {
 
-    Eur20WithdrawChain() {
+    Eur20Banknote() {
       nomination = 20;
     }
   }
 
-  private class Eur10WithdrawChain extends WithdrawChain {
+  private class Eur10Banknote extends Banknote {
 
-    Eur10WithdrawChain() {
+    Eur10Banknote() {
       nomination = 10;
     }
   }
 
-  private class Eur5WithdrawChain extends WithdrawChain {
+  private class Eur5Banknote extends Banknote {
 
-    Eur5WithdrawChain() {
+    Eur5Banknote() {
       nomination = 5;
     }
   }
