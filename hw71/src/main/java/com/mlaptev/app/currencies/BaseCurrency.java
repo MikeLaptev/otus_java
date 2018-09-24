@@ -11,4 +11,9 @@ public interface BaseCurrency {
 
   void uploadBanknotes(Map<Integer, Integer> cassette)
       throws InvalidBanknoteNominationException, InvalidCassetteStateException;
+
+  Map<Integer, Integer> getCurrencyState();
+
+  void setCurrencyState(Map<Integer, Integer> state)
+      throws InvalidCassetteStateException, InvalidBanknoteNominationException;
 }

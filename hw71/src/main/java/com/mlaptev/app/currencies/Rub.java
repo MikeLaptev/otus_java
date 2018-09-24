@@ -34,6 +34,17 @@ public class Rub implements BaseCurrency {
     rub5000.refillBanknoteFromCassette(cassette);
   }
 
+  @Override
+  public Map<Integer, Integer> getCurrencyState() {
+    return rub5000.getBanknoteState();
+  }
+
+  @Override
+  public void setCurrencyState(Map<Integer, Integer> state)
+      throws InvalidCassetteStateException, InvalidBanknoteNominationException {
+    rub5000.updateBanknoteState(state);
+  }
+
   private class Rub5000Banknote extends Banknote {
 
     Rub5000Banknote() {

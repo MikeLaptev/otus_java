@@ -32,6 +32,17 @@ public class Gbp implements BaseCurrency {
     gbp100.refillBanknoteFromCassette(cassette);
   }
 
+  @Override
+  public Map<Integer, Integer> getCurrencyState() {
+    return gbp100.getBanknoteState();
+  }
+
+  @Override
+  public void setCurrencyState(Map<Integer, Integer> state)
+      throws InvalidCassetteStateException, InvalidBanknoteNominationException {
+    gbp100.updateBanknoteState(state);
+  }
+
   private class Gbp100Banknote extends Banknote {
 
     Gbp100Banknote() {

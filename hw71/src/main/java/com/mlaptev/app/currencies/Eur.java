@@ -36,6 +36,17 @@ public class Eur implements BaseCurrency {
     eur500.refillBanknoteFromCassette(cassette);
   }
 
+  @Override
+  public Map<Integer, Integer> getCurrencyState() {
+    return eur500.getBanknoteState();
+  }
+
+  @Override
+  public void setCurrencyState(Map<Integer, Integer> state)
+      throws InvalidCassetteStateException, InvalidBanknoteNominationException {
+    eur500.updateBanknoteState(state);
+  }
+
   private class Eur500Banknote extends Banknote {
 
     Eur500Banknote() {

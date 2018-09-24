@@ -36,6 +36,17 @@ public class Usd implements BaseCurrency {
     usd100.refillBanknoteFromCassette(cassette);
   }
 
+  @Override
+  public Map<Integer, Integer> getCurrencyState() {
+    return usd100.getBanknoteState();
+  }
+
+  @Override
+  public void setCurrencyState(Map<Integer, Integer> state)
+      throws InvalidCassetteStateException, InvalidBanknoteNominationException {
+    usd100.updateBanknoteState(state);
+  }
+
   private class Usd100Banknote extends Banknote {
 
     Usd100Banknote() {

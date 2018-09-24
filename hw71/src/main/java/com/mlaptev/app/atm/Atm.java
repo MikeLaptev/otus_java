@@ -8,6 +8,7 @@ import com.mlaptev.app.exceptions.InvalidBanknoteNominationException;
 import com.mlaptev.app.exceptions.InvalidCassetteStateException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,7 +29,7 @@ public class Atm {
   }
 
   public Map<Integer, Integer> withdraw(CurrencyType type, int amount)
-      throws CurrencyNotSupportedException, CannotWithdrawException {
+      throws CurrencyNotSupportedException, CannotWithdrawException, InvalidCassetteStateException, InvalidBanknoteNominationException {
     if (!isCurrencySupported(type)) {
       throw new CurrencyNotSupportedException(
           String.format("Currency %s is not supported by ATM", type.name()));
@@ -63,16 +64,29 @@ public class Atm {
   }
 
   public AtmMomento save() {
-    // TODO(mlaptev): Implementation is required
-    return null;
+    return new AtmMomento(acceptedCurrencies);
   }
 
-  public void undo(Object obj) {
-    AtmMomento momento = (AtmMomento) obj;
-    // TODO(mlaptev): Implementation is required
+  public void undo(Object obj)
+      throws InvalidCassetteStateException, InvalidBanknoteNominationException {
+    Map<CurrencyType, Map<Integer, Integer>> state = ((AtmMomento) obj).getState();
+    for (CurrencyType type : acceptedCurrencies.keySet()) {
+      acceptedCurrencies.get(type).setCurrencyState(state.getOrDefault(type, new HashMap<>()));
+    }
   }
 
   private class AtmMomento {
-    // TODO(mlaptev): Implementation is required
+
+    private Map<CurrencyType, Map<Integer, Integer>> state = new HashMap<>();
+
+    public AtmMomento(Map<CurrencyType, BaseCurrency> currencies) {
+      state.putAll(currencies.entrySet()
+          .stream()
+          .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue().getCurrencyState())));
+    }
+
+    public Map<CurrencyType, Map<Integer, Integer>> getState() {
+      return state;
+    }
   }
 }
