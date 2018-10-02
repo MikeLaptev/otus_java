@@ -8,7 +8,7 @@ import com.mlaptev.app.tests.TwoTestsThreeBeforeAndAfterDiffOrder;
 import com.mlaptev.app.tests.TwoTestsThreeBeforeAndAfterSameOrder;
 import java.lang.reflect.InvocationTargetException;
 
-public class App {
+public class Application {
 
   public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException,
       InvocationTargetException, InstantiationException, IllegalAccessException {

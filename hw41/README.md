@@ -3,7 +3,7 @@
 #### Before applying ordering
 
 ```bash
-"C:\Program Files\Java\jdk-10.0.1\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\lib\idea_rt.jar=61892:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\bin" -Dfile.encoding=UTF-8 -classpath C:\Users\Mikhail\Documents\Development\otus_java\hw41\target\classes;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.0\log4j-api-2.11.0.jar;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-core\2.11.0\log4j-core-2.11.0.jar com.mlaptev.app.App
+"C:\Program Files\Java\jdk-10.0.1\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\lib\idea_rt.jar=61892:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\bin" -Dfile.encoding=UTF-8 -classpath C:\Users\Mikhail\Documents\Development\otus_java\hw41\target\classes;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.0\log4j-api-2.11.0.jar;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-core\2.11.0\log4j-core-2.11.0.jar com.mlaptev.app.Application
 [INFO ] 2018-08-19 22:58:28.841 [main] Framework - Executing tests from class [com.mlaptev.app.tests.SingleTest]
 [INFO ] 2018-08-19 22:58:28.881 [main] SingleTest - constructor
 [INFO ] 2018-08-19 22:58:28.881 [main] SingleTest - setUp
@@ -59,7 +59,7 @@ Process finished with exit code 0
 #### After applying ordering
 
 ```bash
-"C:\Program Files\Java\jdk-10.0.1\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\lib\idea_rt.jar=61918:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\bin" -Dfile.encoding=UTF-8 -classpath C:\Users\Mikhail\Documents\Development\otus_java\hw41\target\classes;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.0\log4j-api-2.11.0.jar;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-core\2.11.0\log4j-core-2.11.0.jar com.mlaptev.app.App
+"C:\Program Files\Java\jdk-10.0.1\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\lib\idea_rt.jar=61918:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.5\bin" -Dfile.encoding=UTF-8 -classpath C:\Users\Mikhail\Documents\Development\otus_java\hw41\target\classes;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.0\log4j-api-2.11.0.jar;C:\Users\Mikhail\.m2\repository\org\apache\logging\log4j\log4j-core\2.11.0\log4j-core-2.11.0.jar com.mlaptev.app.Application
 [INFO ] 2018-08-19 22:59:13.494 [main] Framework - Executing tests from class [com.mlaptev.app.tests.SingleTest]
 [INFO ] 2018-08-19 22:59:13.521 [main] SingleTest - constructor
 [INFO ] 2018-08-19 22:59:13.522 [main] SingleTest - setUp
@@ -126,7 +126,7 @@ java.lang.reflect.InvocationTargetException: null
 	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
 	at java.lang.reflect.Method.invoke(Method.java:564) ~[?:?]
 	at com.mlaptev.app.framework.Framework.executeTest(Framework.java:57) [classes/:?]
-	at com.mlaptev.app.App.main(App.java:19) [classes/:?]
+	at com.mlaptev.app.Application.main(Application.java:19) [classes/:?]
 Caused by: java.lang.NullPointerException: Example of exception.
 	at com.mlaptev.app.tests.SingleTestWithException.firstTest(SingleTestWithException.java:24) ~[classes/:?]
 	... 6 more
