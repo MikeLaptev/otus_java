@@ -21,7 +21,7 @@
     <maven.compiler.source>10</maven.compiler.source>
     <maven.compiler.target>10</maven.compiler.target>
     <!-- Logger -->
-    <log4j.version>2.16.0</log4j.version>
+    <log4j.version>2.17.0</log4j.version>
     <!-- Unit testing -->
     <junit.jupiter.version>5.3.0-M1</junit.jupiter.version>
     <!-- Fluent assertions -->
